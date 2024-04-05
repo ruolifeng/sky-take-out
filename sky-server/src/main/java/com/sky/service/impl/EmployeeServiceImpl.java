@@ -28,7 +28,7 @@ import org.springframework.util.StringUtils;
 import java.time.LocalDateTime;
 
 @Service
-public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper,Employee> implements EmployeeService{
+public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> implements EmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
@@ -90,9 +90,18 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper,Employee> im
     @Override
     public PageResult queryPage(EmployeePageQueryDTO pageQueryDTO) {
         // TODO mybatis-flex模糊查询不生效
-        QueryWrapper wrapper = QueryWrapper.create().select().from(Employee.class).eq(Employee::getUsername,pageQueryDTO.getName());
-        Page<Employee> employeePage = employeeMapper.paginate(pageQueryDTO.getPage(),pageQueryDTO.getPageSize(), wrapper);
+        new QueryWrapper().eq(Employee::getUsername, pageQueryDTO.getName());
+        Page<Employee> employeePage = employeeMapper.paginate(pageQueryDTO.getPage(), pageQueryDTO.getPageSize(),
+                new QueryWrapper().eq(Employee::getUsername, pageQueryDTO.getName()));
         return new PageResult(employeePage.getTotalPage(), employeePage.getRecords());
+    }
+
+    @Override
+    public void updateStatus(Integer status, Long id) {
+        Employee employee = new Employee();
+        employee.setStatus(status);
+        employee.setId(id);
+        employeeMapper.update(employee);
     }
 
 }
