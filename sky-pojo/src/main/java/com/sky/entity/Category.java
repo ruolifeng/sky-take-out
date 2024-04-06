@@ -1,13 +1,18 @@
 package com.sky.entity;
 
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
+@Alias("Category")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +20,7 @@ public class Category implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id(keyType = KeyType.Auto)
     private Long id;
 
     //类型: 1菜品分类 2套餐分类
