@@ -94,4 +94,10 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
                 .from(ShoppingCart.class)
                 .eq(ShoppingCart::getUserId, BaseContext.getCurrentId()));
     }
+
+    @Override
+    public void clean() {
+        shoppingCartMapper.deleteByQuery(QueryWrapper.create()
+                .eq(ShoppingCart::getUserId, BaseContext.getCurrentId()));
+    }
 }
