@@ -1,6 +1,7 @@
 package com.sky.service;
 
 import com.mybatisflex.core.service.IService;
+import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.ShoppingCart;
 
 /**
@@ -8,5 +9,6 @@ import com.sky.entity.ShoppingCart;
  * @email: sunruolifeng@gmail.com
  * @date: 07/04/2024 11:55 AM
  */
-public interface ShopService extends IService<ShoppingCart> {
+public interface ShoppingCartService extends IService<ShoppingCart> {
+    void addCart(ShoppingCartDTO shoppingCartDTO);
 }
