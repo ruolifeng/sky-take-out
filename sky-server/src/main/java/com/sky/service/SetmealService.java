@@ -1,7 +1,9 @@
 package com.sky.service;
 
 import com.mybatisflex.core.service.IService;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
+import com.sky.result.PageResult;
 import com.sky.vo.DishItemVO;
 
 import java.util.List;
@@ -22,4 +24,5 @@ public interface SetmealService extends IService<Setmeal> {
      */
     List<DishItemVO> getDishItemById(Long id);
 
+    PageResult pageQuery(SetmealPageQueryDTO setmealDTO);
 }

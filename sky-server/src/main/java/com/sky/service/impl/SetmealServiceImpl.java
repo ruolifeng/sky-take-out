@@ -1,12 +1,15 @@
 package com.sky.service.impl;
 
+import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealMapper;
+import com.sky.result.PageResult;
 import com.sky.service.SetmealService;
 import com.sky.service.StemealDishService;
 import com.sky.vo.DishItemVO;
@@ -64,5 +67,17 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
             }
             return dishItemVOS;
         }
+    }
+
+    @Override
+    public PageResult pageQuery(SetmealPageQueryDTO setmealDTO) {
+        Page<Setmeal> paginate = setmealMapper.paginate(setmealDTO.getPage(), setmealDTO.getPageSize(), QueryWrapper.create()
+                .eq(Setmeal::getCategoryId, setmealDTO.getCategoryId())
+                .eq(Setmeal::getStatus, setmealDTO.getStatus())
+                .eq(Setmeal::getName, setmealDTO.getName()));
+        PageResult pageResult = new PageResult();
+        pageResult.setTotal(paginate.getTotalPage());
+        pageResult.setRecords(paginate.getRecords());
+        return pageResult;
     }
 }
