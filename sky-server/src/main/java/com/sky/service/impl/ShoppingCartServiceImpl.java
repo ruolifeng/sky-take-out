@@ -33,6 +33,7 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
     private SetmealMapper setmealMapper;
     @Override
     public void addCart(ShoppingCartDTO shoppingCartDTO) {
+        // TODO 操作字符串出现问题
         System.out.println(shoppingCartDTO);
         // 判断当前添加的商品是否存在购物车中，不同的用户有属于自己的购物车
         QueryWrapper wrapper = QueryWrapper.create()
@@ -84,5 +85,13 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartMapper, Sho
             }
             shoppingCartMapper.insert(shoppingCart);
         }
+    }
+
+    @Override
+    public List<ShoppingCart> showShoppingCart() {
+        return shoppingCartMapper.selectListByQuery(QueryWrapper.create()
+                .select()
+                .from(ShoppingCart.class)
+                .eq(ShoppingCart::getUserId, BaseContext.getCurrentId()));
     }
 }
