@@ -7,10 +7,7 @@ import com.sky.vo.OrderSubmitVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: sunjianrong
@@ -28,5 +25,13 @@ public class OrderController {
     public Result<OrderSubmitVO> submit(@RequestBody OrdersSubmitDTO submitDTO){
         OrderSubmitVO submitVO =orderService.submitOrder(submitDTO);
         return Result.success(submitVO);
+    }
+
+    @ApiOperation(value = "客户催单")
+    // 客户催单
+    @GetMapping("/reminder/{id}")
+    public Result remind(@PathVariable Long id) {
+        orderService.remind(id);
+        return Result.success();
     }
 }

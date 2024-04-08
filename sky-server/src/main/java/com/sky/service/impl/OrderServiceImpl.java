@@ -1,5 +1,6 @@
 package com.sky.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import com.sky.context.BaseContext;
@@ -14,13 +15,16 @@ import com.sky.mapper.OrderMapper;
 import com.sky.mapper.ShoppingCartMapper;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderSubmitVO;
+import com.sky.webSoket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +42,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
     AddressBookMapper addressBookMapper;
     @Autowired
     ShoppingCartMapper shoppingCartMapper;
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     @Transactional
     @Override
@@ -76,5 +82,19 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
                 .orderNumber(orders.getNumber())
                 .orderAmount(orders.getAmount())
                 .build();
+    }
+
+    @Override
+    public void remind(Long id) {
+        Orders orders = orderMapper.selectOneById(id);
+        if (orders == null) {
+            throw new RuntimeException("订单不存在");
+        }
+        // 发送短信或者邮件
+        Map map = new HashMap();
+        map.put("type", 2);
+        map.put("orderId", id);
+        map.put("content", "订单号"+"10");
+        webSocketServer.sendToAllClient(JSON.toJSONString(map));
     }
 }

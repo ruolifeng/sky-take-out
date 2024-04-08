@@ -12,4 +12,6 @@ import com.sky.vo.OrderSubmitVO;
  */
 public interface OrderService extends IService<Orders> {
     OrderSubmitVO submitOrder(OrdersSubmitDTO submitDTO);
+
+    void remind(Long id);
 }
