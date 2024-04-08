@@ -37,7 +37,8 @@ public class OrderTask {
         }
     }
 
-    // 处理派送中的订单，每天凌晨1点触发一次
+    // Orders in delivery are processed, triggered once a day at 1 a.m
+    // Orders in delivery are processed ,triggered once a day at 1.am
     @Scheduled(cron = "0 0 1 * * ?")
     public void processDeliveryOrder() {
         log.info("处理派送中订单,{}", LocalDateTime.now());
