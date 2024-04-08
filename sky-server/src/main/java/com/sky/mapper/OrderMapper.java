@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: sunjianrong
@@ -17,4 +18,6 @@ import java.util.List;
 public interface OrderMapper extends BaseMapper<Orders> {
     @Select("SELECT * FROM orders WHERE status = #{pendingPayment} AND order_time <#{now}")
     List<Orders> getByStatusAndOrderTimeLt(Integer pendingPayment, LocalDateTime now);
+    @Select("select sum(orders.amount) from orders where order_time between #{map.begin} and #{map.end} and status = #{map.status}")
+    Double sumByMap(Map map);
 }

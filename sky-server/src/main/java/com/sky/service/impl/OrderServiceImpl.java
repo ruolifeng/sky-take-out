@@ -94,7 +94,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Orders> implement
         Map map = new HashMap();
         map.put("type", 2);
         map.put("orderId", id);
-        map.put("content", "订单号"+"10");
+        map.put("content", "订单号"+orders.getNumber());
         webSocketServer.sendToAllClient(JSON.toJSONString(map));
     }
 }
